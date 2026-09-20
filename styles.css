@@ -26,6 +26,10 @@ body {
   line-height: 1.65;
 }
 
+img { max-width: 100%; }
+:focus-visible { outline: 3px solid rgba(245, 124, 0, 0.65); outline-offset: 3px; }
+section[id] { scroll-margin-top: 92px; }
+
 a { color: var(--royal-blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
 .container { width: min(1160px, calc(100% - 32px)); margin: 0 auto; }
@@ -102,6 +106,8 @@ a:hover { text-decoration: underline; }
   border-radius: 12px;
   padding: 8px 12px;
   font-size: 22px;
+  color: var(--text);
+  cursor: pointer;
 }
 
 .hero {
@@ -331,6 +337,7 @@ code {
   color: var(--white);
   border-color: transparent;
 }
+.tab-btn:focus-visible { outline-offset: 2px; }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 .table-card {
@@ -398,6 +405,7 @@ input:focus, textarea:focus {
   color: var(--royal-blue);
 }
 .contact-card span { color: var(--muted); }
+.contact-card span a { overflow-wrap: anywhere; }
 .map-box {
   min-height: 280px;
   display: grid;
@@ -412,6 +420,7 @@ input:focus, textarea:focus {
   padding: 48px 0 22px;
 }
 .footer a { display: block; color: #dbe6ff; margin: 8px 0; }
+.footer-pending { display: block; margin: 8px 0; color: #aebfe0; }
 .footer h3,
 .footer h4 { color: var(--white); }
 .footer-grid {
@@ -460,6 +469,12 @@ input:focus, textarea:focus {
   .hero { padding: 58px 0 52px; }
   .brand-text strong { font-size: 16px; }
   .brand-badge { width: 48px; height: 48px; }
+  .brand-text strong { max-width: 210px; }
+  .contact-quick span { display: none; }
+  .hero h1 { font-size: clamp(36px, 12vw, 50px); }
+  .btn { width: 100%; }
+  .tab-buttons { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; }
+  .tab-btn { flex: 0 0 auto; }
 }
 
 
@@ -732,7 +747,7 @@ input:focus, textarea:focus {
 
 
 
-/* Dummy image sections */
+/* Image sections */
 .panel-photo-card {
   overflow: hidden;
   padding: 0;
@@ -810,7 +825,7 @@ input:focus, textarea:focus {
 
 .photo-tile figcaption strong {
   font-size: 20px;
-  color: var(--navy);
+  color: var(--royal-blue-dark);
 }
 
 .photo-tile figcaption span {
@@ -991,4 +1006,13 @@ body.lightbox-open {
     height: 44px;
     font-size: 24px;
   }
+
+  .lightbox-nav.prev { left: 8px; }
+  .lightbox-nav.next { right: 8px; }
+  .lightbox-close { top: 10px; right: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }

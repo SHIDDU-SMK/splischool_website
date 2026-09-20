@@ -6,6 +6,15 @@ if (menuToggle && menu) {
     const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
     menuToggle.setAttribute('aria-expanded', String(!expanded));
     menu.classList.toggle('open');
+    menuToggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+  });
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open navigation menu');
+    });
   });
 }
 
@@ -16,15 +25,27 @@ tabButtons.forEach(button => {
   button.addEventListener('click', () => {
     const target = button.dataset.tab;
 
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    tabPanels.forEach(panel => panel.classList.remove('active'));
+    tabButtons.forEach(btn => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+    tabPanels.forEach(panel => {
+      panel.classList.remove('active');
+      panel.hidden = true;
+    });
 
     button.classList.add('active');
-    document.getElementById(target)?.classList.add('active');
+    button.setAttribute('aria-selected', 'true');
+    const targetPanel = document.getElementById(target);
+    if (targetPanel) {
+      targetPanel.classList.add('active');
+      targetPanel.hidden = false;
+    }
   });
 });
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const year = document.getElementById('year');
+if (year) year.textContent = new Date().getFullYear();
 
 
 const lightbox = document.getElementById('lightbox');
@@ -46,6 +67,7 @@ function openLightbox(index) {
   lightbox.classList.add('active');
   lightbox.setAttribute('aria-hidden', 'false');
   document.body.classList.add('lightbox-open');
+  lightboxClose?.focus();
 }
 
 function closeLightbox() {
@@ -53,6 +75,7 @@ function closeLightbox() {
   lightbox.classList.remove('active');
   lightbox.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('lightbox-open');
+  lightboxTriggers[currentLightboxIndex]?.focus();
 }
 
 function stepLightbox(step) {
